@@ -13,3 +13,12 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+coverage
+.rvmrc
+.powrc
+database.yml
+.DS_Store
+*.swp
+.idea/
+.rspec
