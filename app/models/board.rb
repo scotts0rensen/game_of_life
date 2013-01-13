@@ -2,14 +2,14 @@ class Board
 
   attr_reader :size, :grid
 
-  def initialize size=10
+  def initialize size=10,board=nil
     @size = size
-    @grid = Array.new(@size)
-    @size.times do |x|
-      @grid[x] = Array.new(@size)
-      @size.times do |y|
-        @grid[x][y] = false
-      end
+    @grid = Array.new(@size**2)
+    @grid.map! { false }
+    if !board.nil? && board.length == @grid.length
+      false_vals = [nil,false,0,'0','o','O']
+      board.map! { |a| !false_vals.include? a }
+      @grid = board
     end
   end
 
@@ -22,14 +22,14 @@ class Board
   end
 
   def print_board
-    @size.times do |x|
+    print "|"
+    @grid.each_with_index do |val, index|
+      print_cell x,y
       print "|"
-      @size.times do |y|
-        print_cell x,y
-        print "|"
-      end
-      print "\n"
+      print "\n" if  (index+1) % size == 0
     end
+    print "\n"
+    nil
   end
 
   def live! x,y
@@ -44,19 +44,27 @@ class Board
     x >= 0 && x < @size && y >= 0 && y < @size
   end
     
+  def index x,y
+    (x * size) + y
+  end
+
   def set! x,y,val
     if valid_coord x,y
-      @grid[x][y] = val
+      @grid[index(x,y)] = val
     end
     nil
   end
 
   def live? x,y
     if valid_coord x,y
-      @grid[x][y]
+      @grid[index(x,y)]
     else
       false
     end
+  end
+
+  def dead? x,y
+    !live? x,y
   end
 
   def live_cnt x,y

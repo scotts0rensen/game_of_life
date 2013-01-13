@@ -89,4 +89,20 @@ describe Board do
 
     board.live_cnt(0,1).should eq 5
   end
+
+  it "has ability to initialize with an array" do
+    b = %w(x 0 0
+           0 x 0
+           0 0 x)
+    board = Board.new 3,b
+    board.live?(0,0).should be true
+    board.live?(0,1).should be false
+    board.live?(0,2).should be false
+    board.live?(1,0).should be false
+    board.live?(1,1).should be true
+    board.live?(1,2).should be false
+    board.live?(2,0).should be false
+    board.live?(2,1).should be false
+    board.live?(2,2).should be true
+  end
 end
