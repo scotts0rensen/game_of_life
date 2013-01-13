@@ -1,6 +1,6 @@
 class Board
 
-  attr_reader :size, :grid
+  attr_reader :size
 
   def initialize size=10,board=nil
     @size = size
@@ -13,18 +13,13 @@ class Board
     end
   end
 
-  def print_cell x,y
-    if live? x,y 
-      print "X"
-    else
-      print "O"
-    end
-  end
-
   def print_board
-    print "|"
     @grid.each_with_index do |val, index|
-      print_cell x,y
+      if (val)
+        print "X"
+      else
+        print "O"
+      end
       print "|"
       print "\n" if  (index+1) % size == 0
     end
@@ -52,7 +47,7 @@ class Board
     if valid_coord x,y
       @grid[index(x,y)] = val
     end
-    nil
+    val
   end
 
   def live? x,y
@@ -68,15 +63,17 @@ class Board
   end
 
   def live_cnt x,y
+    x_indexes = [x-1,x,x+1].select { |a| a >= 0 && a < @size }
+    y_indexes = [y-1,y,y+1].select { |a| a >= 0 && a < @size }
+
     cnt = 0
-    cnt += 1 if live? x-1, y-1
-    cnt += 1 if live? x-1, y
-    cnt += 1 if live? x-1, y+1
-    cnt += 1 if live? x, y-1
-    cnt += 1 if live? x, y+1
-    cnt += 1 if live? x+1, y-1
-    cnt += 1 if live? x+1, y
-    cnt += 1 if live? x+1, y+1
+    x_indexes.each do |x_index|
+      y_indexes.each do |y_index|
+        if !(x_index == x && y_index == y) && live?(x_index, y_index)
+          cnt += 1
+        end
+      end
+    end
     cnt
   end
 end

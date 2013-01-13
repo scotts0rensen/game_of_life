@@ -7,12 +7,12 @@ describe Board do
 
   it "has ability to set live" do
     board = Board.new
-    board.live!(2,2).should eq nil
+    board.live!(2,2).should eq true
   end
 
   it "has ability to set dead" do
     board = Board.new
-    board.dead!(2,2).should eq nil
+    board.dead!(2,2).should eq false
   end
 
   it "can retrieve live default value" do
