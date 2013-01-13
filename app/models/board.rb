@@ -8,8 +8,7 @@ class Board
     @grid.map! { false }
     if !board.nil? && board.length == @grid.length
       false_vals = [nil,false,0,'0','o','O']
-      board.map! { |a| !false_vals.include? a }
-      @grid = board
+      @grid = board.map { |a| !false_vals.include? a }
     end
   end
 
@@ -27,6 +26,15 @@ class Board
     nil
   end
 
+  def index x,y
+    (x * size) + y
+  end
+
+  def valid_coord? x,y
+    i = index x,y
+    i >= 0 && i < @grid.length
+  end
+    
   def live! x,y
     set! x,y,true
   end
@@ -35,23 +43,15 @@ class Board
     set! x,y,false
   end
 
-  def valid_coord x,y
-    x >= 0 && x < @size && y >= 0 && y < @size
-  end
-    
-  def index x,y
-    (x * size) + y
-  end
-
   def set! x,y,val
-    if valid_coord x,y
+    if valid_coord? x,y
       @grid[index(x,y)] = val
     end
     val
   end
 
   def live? x,y
-    if valid_coord x,y
+    if valid_coord? x,y
       @grid[index(x,y)]
     else
       false
@@ -62,7 +62,7 @@ class Board
     !live? x,y
   end
 
-  def live_cnt x,y
+  def live_neighbors_cnt x,y
     x_indexes = [x-1,x,x+1].select { |a| a >= 0 && a < @size }
     y_indexes = [y-1,y,y+1].select { |a| a >= 0 && a < @size }
 

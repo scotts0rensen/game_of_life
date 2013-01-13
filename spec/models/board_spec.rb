@@ -54,7 +54,7 @@ describe Board do
 
   it "can retrieve count of zero live neighbors" do
     board = Board.new
-    board.live_cnt(2,2).should eq 0
+    board.live_neighbors_cnt(2,2).should eq 0
   end
 
   it "can count 3 neighbors in the middle" do
@@ -65,7 +65,7 @@ describe Board do
       end
     end
 
-    board.live_cnt(1,1).should eq 8
+    board.live_neighbors_cnt(1,1).should eq 8
   end
 
   it "can count 3 neighbors in a corner" do
@@ -76,7 +76,7 @@ describe Board do
       end
     end
 
-    board.live_cnt(0,2).should eq 3
+    board.live_neighbors_cnt(0,2).should eq 3
   end
 
   it "can count 5 neighbors on a side" do
@@ -87,7 +87,7 @@ describe Board do
       end
     end
 
-    board.live_cnt(0,1).should eq 5
+    board.live_neighbors_cnt(0,1).should eq 5
   end
 
   it "has ability to initialize with an array" do

@@ -19,7 +19,7 @@ class Game
   end
 
   def tick board,x,y
-    cnt = board.live_cnt x,y
+    cnt = board.live_neighbors_cnt x,y
 
     if board.dead?(x,y) && cnt == 3
       true

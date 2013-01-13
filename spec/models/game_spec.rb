@@ -15,7 +15,7 @@ describe Game do
     it "kills a live cell with 0 neighbors" do
       game = Game.new 3
       game.board.live! 1,1
-      game.board.live_cnt(1,1).should eq 0
+      game.board.live_neighbors_cnt(1,1).should eq 0
       game.run
       game.board.live?(1,1).should eq false
     end
@@ -23,7 +23,7 @@ describe Game do
       game = Game.new 3
       game.board.live! 1,1
       game.board.live! 0,1
-      game.board.live_cnt(1,1).should eq 1
+      game.board.live_neighbors_cnt(1,1).should eq 1
       game.run
       game.board.live?(1,1).should eq false
     end
@@ -35,7 +35,7 @@ describe Game do
              0 1 0
              0 1 0)
       game = Game.new 3,b
-      game.board.live_cnt(1,1).should eq 2
+      game.board.live_neighbors_cnt(1,1).should eq 2
       game.run
       game.board.live?(1,1).should eq true
     end
@@ -44,7 +44,7 @@ describe Game do
              0 1 0
              0 1 0)
       game = Game.new 3, b
-      game.board.live_cnt(1,1).should eq 3
+      game.board.live_neighbors_cnt(1,1).should eq 3
       game.run
       game.board.live?(1,1).should eq true
     end
@@ -56,7 +56,7 @@ describe Game do
              1 1 0
              0 1 0)
       game = Game.new 3, b
-      game.board.live_cnt(1,1).should eq 4
+      game.board.live_neighbors_cnt(1,1).should eq 4
       game.run
       game.board.live?(1,1).should eq false
     end
@@ -65,7 +65,7 @@ describe Game do
              1 1 0
              1 1 0)
       game = Game.new 3, b
-      game.board.live_cnt(1,1).should eq 5
+      game.board.live_neighbors_cnt(1,1).should eq 5
       game.run
       game.board.live?(1,1).should eq false
     end
@@ -74,7 +74,7 @@ describe Game do
              1 1 1
              1 1 0)
       game = Game.new 3, b
-      game.board.live_cnt(1,1).should eq 6
+      game.board.live_neighbors_cnt(1,1).should eq 6
       game.run
       game.board.live?(1,1).should eq false
     end
@@ -83,16 +83,16 @@ describe Game do
              1 1 1
              1 1 0)
       game = Game.new 3, b
-      game.board.live_cnt(1,1).should eq 7
+      game.board.live_neighbors_cnt(1,1).should eq 7
       game.run
       game.board.live?(1,1).should eq false
     end
-    it "kills a live cell with 8 neighbors" do
+    it "killsneighbors_ a live cell with 8 neighbors" do
       b = %w(1 1 1
              1 1 1
              1 1 1)
       game = Game.new 3, b
-      game.board.live_cnt(1,1).should eq 8
+      game.board.live_neighbors_cnt(1,1).should eq 8
       game.run
       game.board.live?(1,1).should eq false
     end
@@ -104,7 +104,7 @@ describe Game do
              1 1 1
              1 1 1)
       game = Game.new 3, b
-      game.board.live_cnt(0,0).should eq 3
+      game.board.live_neighbors_cnt(0,0).should eq 3
       game.run
       game.board.live?(0,0).should eq true
     end
@@ -113,7 +113,7 @@ describe Game do
              1 1 1
              1 1 1)
       game = Game.new 3, b
-      game.board.live_cnt(0,0).should eq 2
+      game.board.live_neighbors_cnt(0,0).should eq 2
       game.run
       game.board.live?(0,0).should eq false
     end
