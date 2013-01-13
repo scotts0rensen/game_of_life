@@ -33,35 +33,42 @@ class Board
   end
 
   def live! x,y
-    @grid[x][y] = true
-    nil
+    set! x,y,true
   end
 
   def dead! x,y
-    @grid[x][y] = false
+    set! x,y,false
+  end
+
+  def valid_coord x,y
+    x >= 0 && x < @size && y >= 0 && y < @size
+  end
+    
+  def set! x,y,val
+    if valid_coord x,y
+      @grid[x][y] = val
+    end
     nil
   end
 
   def live? x,y
-    @grid[x][y]
-  end
-
-  def live_cnt x,y
-    if live? x,y
-      1
+    if valid_coord x,y
+      @grid[x][y]
     else
-      0
+      false
     end
   end
 
-  def live_neighbors x,y
-    (live_cnt x-1, y-1)
-      + (live_cnt x-1, y)
-      + (live_cnt x-1, y+1)
-      + (live_cnt x, y-1)
-      + (live_cnt x, y+1)
-      + (live_cnt x+1, y-1)
-      + (live_cnt x+1, y)
-      + (live_cnt x+1, y+1)
+  def live_cnt x,y
+    cnt = 0
+    cnt += 1 if live? x-1, y-1
+    cnt += 1 if live? x-1, y
+    cnt += 1 if live? x-1, y+1
+    cnt += 1 if live? x, y-1
+    cnt += 1 if live? x, y+1
+    cnt += 1 if live? x+1, y-1
+    cnt += 1 if live? x+1, y
+    cnt += 1 if live? x+1, y+1
+    cnt
   end
 end

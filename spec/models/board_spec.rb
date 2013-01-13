@@ -20,22 +20,44 @@ describe Board do
     board.live?(2,2).should be false
   end
 
-  it "can retrieve live changed value" do
-    board = Board.new
-    board.live!(2,2)
-    board.live?(2,2).should be true
+  context "should be dead for invalid arguments" do
+    it "-1,-1" do
+      board = Board.new
+      board.live?(-1,-1).should be false
+    end
+
+    it "-1,0" do
+      board = Board.new
+      board.live?(-1,0).should be false
+    end
+
+    it "0,-1" do
+      board = Board.new
+      board.live?(0,-1).should be false
+    end
+
+    it "3,3" do
+      board = Board.new 3
+      board.live?(3,3).should be false
+    end
+
+    it "0,3" do
+      board = Board.new 3
+      board.live?(0,3).should be false
+    end
+
+    it "3,0" do
+      board = Board.new 3
+      board.live?(3,0).should be false
+    end
   end
 
   it "can retrieve count of zero live neighbors" do
     board = Board.new
-    board.live_neighbors(2,2).should be 0
+    board.live_cnt(2,2).should eq 0
   end
 
-  it "can retrieve count of all live neighbors" do
-    #   0  1  2
-    # 0 x  x  x
-    # 1 x  ?  x
-    # 2 x  x  x
+  it "can count 3 neighbors in the middle" do
     board = Board.new 3
     3.times do |x|
       3.times do |y|
@@ -43,8 +65,28 @@ describe Board do
       end
     end
 
-    board.print_board
-    board.live_neighbors(1,1).should eq 9
+    board.live_cnt(1,1).should eq 8
+  end
 
+  it "can count 3 neighbors in a corner" do
+    board = Board.new 3
+    3.times do |x|
+      3.times do |y|
+        board.live! x,y
+      end
+    end
+
+    board.live_cnt(0,2).should eq 3
+  end
+
+  it "can count 5 neighbors on a side" do
+    board = Board.new 3
+    3.times do |x|
+      3.times do |y|
+        board.live! x,y
+      end
+    end
+
+    board.live_cnt(0,1).should eq 5
   end
 end
