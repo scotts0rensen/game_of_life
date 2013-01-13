@@ -62,9 +62,13 @@ class Board
     !live? x,y
   end
 
+  def neighbor_indexes index
+    [index-1,index,index+1].select { |a| a >= 0 && a < @size }
+  end
+
   def live_neighbors_cnt x,y
-    x_indexes = [x-1,x,x+1].select { |a| a >= 0 && a < @size }
-    y_indexes = [y-1,y,y+1].select { |a| a >= 0 && a < @size }
+    x_indexes = neighbor_indexes x
+    y_indexes = neighbor_indexes y
 
     cnt = 0
     x_indexes.each do |x_index|
@@ -74,6 +78,7 @@ class Board
         end
       end
     end
+    
     cnt
   end
 end
